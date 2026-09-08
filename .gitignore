@@ -24,6 +24,12 @@
 .DS_Store
 *.pem
 
+# impeccable design skill — keep surface briefs, drop transient review artifacts
+/.impeccable/review/
+/.impeccable/build/
+/.impeccable/mocks/
+/_shot.mjs
+
 # debug
 npm-debug.log*
 yarn-debug.log*
