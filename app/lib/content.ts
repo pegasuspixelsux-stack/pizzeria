@@ -19,9 +19,9 @@ const q = "&q=80&auto=format&fit=crop";
 
 export const img = {
   hero: `${U}1507525428034-b723cf961d3e?w=2200&ar=16:10${q}`,
-  lunch: `${U}1559339352-11d035aa65de?w=1400&ar=4:5${q}`,
-  dinner: `${U}1414235077428-338989a2e8c0?w=1400&ar=4:5${q}`,
-  cocktails: `${U}1470337458703-46ad1756a187?w=1400&ar=4:5${q}`,
+  lunch: `${U}1559339352-11d035aa65de?w=1400&ar=1:1${q}`,
+  dinner: `${U}1414235077428-338989a2e8c0?w=1400&ar=1:1${q}`,
+  cocktails: `${U}1470337458703-46ad1756a187?w=1400&ar=1:1${q}`,
   atmosphere: `${U}1471922694854-ff1b63b20054?w=1700&ar=4:3${q}`,
 };
 

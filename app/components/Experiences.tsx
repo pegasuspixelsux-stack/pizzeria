@@ -36,7 +36,7 @@ export function Experiences() {
                 <Reveal
                   as="figure"
                   className={[
-                    "relative aspect-[4/5] overflow-hidden rounded-[14px] bg-shell ring-1 ring-ink/[0.06] sm:aspect-[5/6] lg:aspect-[4/5] lg:max-h-[27rem]",
+                    "relative aspect-square overflow-hidden rounded-[14px] bg-shell ring-1 ring-ink/[0.06]",
                     flip ? "lg:order-2" : "",
                   ].join(" ")}
                 >
