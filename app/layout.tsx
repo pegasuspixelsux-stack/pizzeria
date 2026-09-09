@@ -33,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
+      data-scroll-behavior="smooth"
       className={`${playfair.variable} ${jakarta.variable} antialiased`}
     >
       <body className="min-h-dvh bg-canvas font-sans text-ink">{children}</body>

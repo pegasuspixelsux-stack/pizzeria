@@ -93,14 +93,23 @@ export function SiteFooter() {
 
         <div className="mt-14 flex flex-col gap-2 border-t border-line pt-8 text-[0.8rem] text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} Pizzeria. Una maqueta de diseño — no es un negocio real.</p>
-          <p>
-            Punta del Este, Uruguay · Fotografía vía{" "}
-            <a
-              href="https://unsplash.com/license"
-              className="text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
+          <p className="flex items-center gap-3">
+            <Link
+              href="/admin"
+              className="text-muted transition-colors hover:text-ink"
             >
-              Unsplash
-            </a>
+              Panel
+            </Link>
+            <span aria-hidden>·</span>
+            <span>
+              Punta del Este, Uruguay · Fotografía vía{" "}
+              <a
+                href="https://unsplash.com/license"
+                className="text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
+              >
+                Unsplash
+              </a>
+            </span>
           </p>
         </div>
       </div>
