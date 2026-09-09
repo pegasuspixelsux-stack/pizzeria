@@ -11,6 +11,7 @@ import {
   sectionOrder,
   type MenuItem,
 } from "../../lib/menu";
+import { CSV_TEMPLATE, parseMenuFile } from "../../lib/menu-import";
 
 type AdminItem = MenuItem & { image?: string };
 
@@ -49,6 +50,9 @@ export function MenuManager() {
   );
   const [editing, setEditing] = useState<string | "new" | null>(null);
   const [draft, setDraft] = useState<Draft>(empty);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importBusy, setImportBusy] = useState(false);
+  const [importMsg, setImportMsg] = useState<string | null>(null);
 
   const shown = items.filter((i) => i.published !== false).length;
   const hidden = items.length - shown;
@@ -132,6 +136,43 @@ export function MenuManager() {
     if (file) setDraft((d) => ({ ...d, image: URL.createObjectURL(file) }));
   };
 
+  const onImportFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    setImportBusy(true);
+    setImportMsg(null);
+    try {
+      const { items: parsed, skipped } = await parseMenuFile(file);
+      if (parsed.length) {
+        setItems((prev) => [
+          ...prev,
+          ...parsed.map((p) => ({ ...p, id: crypto.randomUUID() })),
+        ]);
+      }
+      setImportMsg(
+        parsed.length
+          ? `Se agregaron ${parsed.length} platos${skipped ? ` · ${skipped} filas omitidas` : ""}.`
+          : "No se encontraron filas válidas. Revisá los encabezados.",
+      );
+    } catch {
+      setImportMsg("No se pudo leer el archivo. Verificá el formato.");
+    } finally {
+      setImportBusy(false);
+    }
+  };
+
+  const downloadTemplate = () => {
+    const url = URL.createObjectURL(
+      new Blob([CSV_TEMPLATE], { type: "text/csv;charset=utf-8" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "plantilla-carta.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between gap-4">
@@ -142,15 +183,79 @@ export function MenuManager() {
           ) : null}
         </p>
         {editing === null ? (
-          <button
-            type="button"
-            onClick={startNew}
-            className="rounded-full bg-adm-sidebar px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-adm-sidebar-deep"
-          >
-            Agregar plato
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setImportOpen((v) => !v);
+                setImportMsg(null);
+              }}
+              className="rounded-full border border-adm-border px-4 py-2 text-[0.82rem] font-medium text-adm-muted transition-colors hover:border-adm-sidebar hover:text-adm-sidebar"
+            >
+              Cargar carta
+            </button>
+            <button
+              type="button"
+              onClick={startNew}
+              className="rounded-full bg-adm-sidebar px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-adm-sidebar-deep"
+            >
+              Agregar plato
+            </button>
+          </div>
         ) : null}
       </div>
+
+      {importOpen && editing === null ? (
+        <div className="mt-5 rounded-[16px] border border-adm-border bg-adm-panel p-5 shadow-[0_1px_2px_rgba(51,37,30,0.04)] sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="font-display text-lg text-adm-ink">
+              Importar carta (CSV o Excel)
+            </h3>
+            <button
+              type="button"
+              onClick={() => setImportOpen(false)}
+              className="text-[0.8rem] text-adm-faint hover:text-adm-ink"
+            >
+              Cerrar
+            </button>
+          </div>
+          <p className="mt-2 text-[0.85rem] leading-relaxed text-adm-muted">
+            Archivo <strong>.csv</strong>, <strong>.xlsx</strong> o{" "}
+            <strong>.xls</strong> con encabezados: <code>name</code>,{" "}
+            <code>description</code>, <code>price</code>, <code>category</code>,{" "}
+            <code>tags</code>, <code>image</code>, <code>published</code>. Los
+            platos se agregan a los existentes.
+          </p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <input
+              type="file"
+              accept=".csv,.xlsx,.xls"
+              onChange={onImportFile}
+              disabled={importBusy}
+              className="text-[0.82rem] text-adm-muted file:mr-3 file:rounded-full file:border file:border-adm-border file:bg-adm-bg file:px-3 file:py-1.5 file:text-[0.8rem] file:text-adm-ink disabled:opacity-50"
+            />
+            <button
+              type="button"
+              onClick={downloadTemplate}
+              className="text-[0.82rem] font-medium text-adm-sidebar hover:underline"
+            >
+              Descargar plantilla CSV
+            </button>
+          </div>
+
+          {importBusy ? (
+            <p className="mt-3 animate-pulse text-[0.82rem] font-medium text-adm-sidebar">
+              Procesando archivo…
+            </p>
+          ) : null}
+          {importMsg ? (
+            <p className="mt-3 rounded-[8px] border border-adm-border bg-adm-bg px-3 py-2 text-[0.82rem] text-adm-ink">
+              {importMsg}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       {editing !== null ? (
         <div className="mt-5 rounded-[16px] border border-adm-border bg-adm-panel p-5 shadow-[0_1px_2px_rgba(51,37,30,0.04)] sm:p-6">

@@ -1,11 +1,22 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { locations as SEED_LOCATIONS } from "../../lib/content";
+import { categoryOrder } from "../../lib/menu";
 
 const label =
   "block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-adm-muted";
 const field =
   "mt-2 w-full rounded-[10px] border border-adm-border bg-adm-panel px-3.5 py-2.5 text-[0.92rem] text-adm-ink outline-none transition-colors placeholder:text-adm-faint focus:border-adm-sidebar";
+
+type Loc = {
+  name: string;
+  address: string;
+  hours: string;
+  phone: string;
+  email: string;
+  whatsapp: string;
+};
 
 export function ConfigPanel() {
   const [local, setLocal] = useState({
@@ -23,11 +34,32 @@ export function ConfigPanel() {
     email: true,
     nueva: true,
   });
+  const [locs, setLocs] = useState<Loc[]>(
+    SEED_LOCATIONS.map((l) => ({
+      name: l.name,
+      address: l.address,
+      hours: l.hours.replace(/^[^·]*·\s*/, ""),
+      phone: l.phoneLabel,
+      email: "",
+      whatsapp: "",
+    })),
+  );
+  const [cats, setCats] = useState<string[]>([...categoryOrder]);
+  const [newCat, setNewCat] = useState("");
   const [saved, setSaved] = useState(false);
 
   const flash = () => {
     setSaved(true);
     window.setTimeout(() => setSaved(false), 2600);
+  };
+
+  const setLoc = (i: number, key: keyof Loc, value: string) =>
+    setLocs((prev) => prev.map((l, idx) => (idx === i ? { ...l, [key]: value } : l)));
+
+  const addCat = () => {
+    const c = newCat.trim().toLowerCase().replace(/\s+/g, "_");
+    if (c && !cats.includes(c)) setCats((prev) => [...prev, c]);
+    setNewCat("");
   };
 
   return (
@@ -59,6 +91,110 @@ export function ConfigPanel() {
               }
             />
           </Row>
+        </div>
+      </Section>
+
+      <Section title="Sucursales">
+        <div className="space-y-4">
+          {locs.map((loc, i) => (
+            <div
+              key={loc.name}
+              className="rounded-[12px] border border-adm-border bg-adm-bg p-4"
+            >
+              <p className="text-[0.82rem] font-semibold text-adm-ink">
+                {loc.name}
+              </p>
+              <div className="mt-3 grid gap-x-6 gap-y-4 sm:grid-cols-2">
+                <Row label="Dirección">
+                  <input
+                    className={field}
+                    value={loc.address}
+                    onChange={(e) => setLoc(i, "address", e.target.value)}
+                    placeholder="Ej. Av. Gorlero 1234"
+                  />
+                </Row>
+                <Row label="Horario">
+                  <input
+                    className={field}
+                    value={loc.hours}
+                    onChange={(e) => setLoc(i, "hours", e.target.value)}
+                    placeholder="Ej. 12:00 – 00:00"
+                  />
+                </Row>
+                <Row label="Teléfono">
+                  <input
+                    className={field}
+                    value={loc.phone}
+                    onChange={(e) => setLoc(i, "phone", e.target.value)}
+                    placeholder="Ej. +598 4248 1234"
+                  />
+                </Row>
+                <Row label="Correo">
+                  <input
+                    type="email"
+                    className={field}
+                    value={loc.email}
+                    onChange={(e) => setLoc(i, "email", e.target.value)}
+                    placeholder="Ej. puntadeleste@pizzeria.uy"
+                  />
+                </Row>
+                <div className="sm:col-span-2">
+                  <span className={label}>WhatsApp de pedidos</span>
+                  <input
+                    className={field}
+                    value={loc.whatsapp}
+                    onChange={(e) => setLoc(i, "whatsapp", e.target.value)}
+                    placeholder="Con código de país — ej. +59899123456"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Categorías del menú">
+        <p className="text-[0.85rem] text-adm-muted">
+          Categorías disponibles para clasificar los platos de la carta.
+        </p>
+        <div className="flex gap-2">
+          <input
+            className={`${field} flex-1`}
+            value={newCat}
+            onChange={(e) => setNewCat(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addCat();
+              }
+            }}
+            placeholder="Nueva categoría (ej. ensaladas)"
+          />
+          <button
+            type="button"
+            onClick={addCat}
+            className="mt-2 shrink-0 rounded-[10px] bg-adm-sidebar px-4 text-[0.82rem] font-semibold text-white transition-colors hover:bg-adm-sidebar-deep"
+          >
+            Agregar
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2 pt-1">
+          {cats.map((cat) => (
+            <span
+              key={cat}
+              className="inline-flex items-center gap-2 rounded-lg border border-adm-border bg-adm-bg px-3 py-1.5 text-[0.85rem] font-medium text-adm-sidebar"
+            >
+              {cat}
+              <button
+                type="button"
+                onClick={() => setCats((prev) => prev.filter((c) => c !== cat))}
+                aria-label={`Quitar ${cat}`}
+                className="text-adm-faint transition-colors hover:text-[#b0442e]"
+              >
+                ✕
+              </button>
+            </span>
+          ))}
         </div>
       </Section>
 
