@@ -39,9 +39,9 @@ const empty: Draft = {
 };
 
 const field =
-  "mt-2 w-full rounded-[10px] border border-line bg-canvas px-3.5 py-2.5 text-[0.92rem] text-ink outline-none transition-colors placeholder:text-faint focus:border-ocean";
+  "mt-2 w-full rounded-[10px] border border-adm-border bg-adm-panel px-3.5 py-2.5 text-[0.92rem] text-adm-ink outline-none transition-colors placeholder:text-adm-faint focus:border-adm-sidebar";
 const label =
-  "block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted";
+  "block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-adm-muted";
 
 export function MenuManager() {
   const [items, setItems] = useState<AdminItem[]>(() =>
@@ -109,11 +109,14 @@ export function MenuManager() {
     cancel();
   };
 
-  const remove = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+  const remove = (id: string) =>
+    setItems((prev) => prev.filter((i) => i.id !== id));
 
   const togglePublished = (id: string) =>
     setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, published: i.published === false } : i)),
+      prev.map((i) =>
+        i.id === id ? { ...i, published: i.published === false } : i,
+      ),
     );
 
   const toggleTag = (t: MenuItem["tags"][number]) =>
@@ -132,17 +135,17 @@ export function MenuManager() {
   return (
     <div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-[0.9rem] text-muted">
+        <p className="text-[0.9rem] text-adm-muted">
           {shown} en la carta
           {hidden > 0 ? (
-            <span className="text-faint"> · {hidden} sin publicar</span>
+            <span className="text-adm-faint"> · {hidden} sin publicar</span>
           ) : null}
         </p>
         {editing === null ? (
           <button
             type="button"
             onClick={startNew}
-            className="rounded-full bg-ink px-4 py-2 text-[0.82rem] font-semibold text-canvas transition-transform duration-300 hover:-translate-y-0.5"
+            className="rounded-full bg-adm-sidebar px-4 py-2 text-[0.82rem] font-semibold text-white transition-colors hover:bg-adm-sidebar-deep"
           >
             Agregar plato
           </button>
@@ -150,8 +153,8 @@ export function MenuManager() {
       </div>
 
       {editing !== null ? (
-        <div className="mt-5 rounded-[16px] border border-line bg-mist/40 p-5 sm:p-6">
-          <h3 className="font-display text-lg text-ink">
+        <div className="mt-5 rounded-[16px] border border-adm-border bg-adm-panel p-5 shadow-[0_1px_2px_rgba(51,37,30,0.04)] sm:p-6">
+          <h3 className="font-display text-lg text-adm-ink">
             {editing === "new" ? "Nuevo plato" : "Editar plato"}
           </h3>
 
@@ -161,7 +164,9 @@ export function MenuManager() {
               <input
                 className={field}
                 value={draft.name}
-                onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+                onChange={(e) =>
+                  setDraft((d) => ({ ...d, name: e.target.value }))
+                }
                 placeholder="Margherita"
               />
             </div>
@@ -211,7 +216,9 @@ export function MenuManager() {
               <input
                 className={field}
                 value={draft.unit}
-                onChange={(e) => setDraft((d) => ({ ...d, unit: e.target.value }))}
+                onChange={(e) =>
+                  setDraft((d) => ({ ...d, unit: e.target.value }))
+                }
                 placeholder="Copa · 500cc · Pinta"
               />
             </div>
@@ -229,11 +236,7 @@ export function MenuManager() {
                 }
               >
                 {categoryOrder.map((c) => (
-                  <option
-                    key={c}
-                    value={c}
-                    className="bg-[#2b1710] text-[#fdfbf7]"
-                  >
+                  <option key={c} value={c} className="text-adm-ink">
                     {categoryLabels[c]}
                   </option>
                 ))}
@@ -251,8 +254,8 @@ export function MenuManager() {
                     className={[
                       "rounded-full border px-3 py-1.5 text-[0.8rem] transition-colors",
                       draft.tags.includes(t)
-                        ? "border-ocean bg-ocean/10 text-ocean"
-                        : "border-line text-muted hover:text-ink",
+                        ? "border-adm-sidebar bg-adm-sidebar/5 text-adm-sidebar"
+                        : "border-adm-border text-adm-muted hover:text-adm-ink",
                     ].join(" ")}
                   >
                     {sectionLabels[t]}
@@ -272,12 +275,12 @@ export function MenuManager() {
                 className={[
                   "mt-2 flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.8rem] transition-colors",
                   draft.published
-                    ? "border-[#7FB37E]/50 bg-[#7FB37E]/10 text-[#8fca8c]"
-                    : "border-line text-muted hover:text-ink",
+                    ? "border-[#7FB37E]/50 bg-[#7FB37E]/12 text-[#3f7d3c]"
+                    : "border-adm-border text-adm-muted hover:text-adm-ink",
                 ].join(" ")}
               >
                 <span
-                  className={`h-2 w-2 rounded-full ${draft.published ? "bg-[#8fca8c]" : "bg-faint"}`}
+                  className={`h-2 w-2 rounded-full ${draft.published ? "bg-[#3f7d3c]" : "bg-adm-faint"}`}
                 />
                 {draft.published
                   ? "Visible en la carta"
@@ -288,7 +291,7 @@ export function MenuManager() {
             <div className="sm:col-span-2">
               <label className={label}>Foto</label>
               <div className="mt-2 flex items-center gap-4">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[10px] border border-line bg-shell">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[10px] border border-adm-border bg-adm-border/40">
                   {draft.image ? (
                     <Image
                       src={draft.image}
@@ -303,10 +306,10 @@ export function MenuManager() {
                   type="file"
                   accept="image/*"
                   onChange={onFile}
-                  className="text-[0.82rem] text-muted file:mr-3 file:rounded-full file:border file:border-line file:bg-canvas file:px-3 file:py-1.5 file:text-[0.8rem] file:text-ink"
+                  className="text-[0.82rem] text-adm-muted file:mr-3 file:rounded-full file:border file:border-adm-border file:bg-adm-bg file:px-3 file:py-1.5 file:text-[0.8rem] file:text-adm-ink"
                 />
               </div>
-              <p className="mt-1.5 text-[0.75rem] text-faint">
+              <p className="mt-1.5 text-[0.75rem] text-adm-faint">
                 Vista previa local — no se sube a ningún lado en esta maqueta.
               </p>
             </div>
@@ -316,14 +319,14 @@ export function MenuManager() {
             <button
               type="button"
               onClick={save}
-              className="rounded-full bg-ink px-5 py-2.5 text-[0.82rem] font-semibold text-canvas"
+              className="rounded-full bg-adm-sidebar px-5 py-2.5 text-[0.82rem] font-semibold text-white transition-colors hover:bg-adm-sidebar-deep"
             >
               Guardar
             </button>
             <button
               type="button"
               onClick={cancel}
-              className="rounded-full px-4 py-2.5 text-[0.82rem] font-medium text-muted hover:text-ink"
+              className="rounded-full px-4 py-2.5 text-[0.82rem] font-medium text-adm-muted hover:text-adm-ink"
             >
               Cancelar
             </button>
@@ -334,10 +337,10 @@ export function MenuManager() {
       <div className="mt-8 space-y-8">
         {grouped.map((g) => (
           <div key={g.cat}>
-            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-gold">
+            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-adm-sidebar">
               {categoryLabels[g.cat]}
             </h3>
-            <ul className="mt-3 divide-y divide-line/60">
+            <ul className="mt-3 divide-y divide-adm-border">
               {g.list.map((item) => (
                 <li
                   key={item.id}
@@ -346,7 +349,7 @@ export function MenuManager() {
                     item.published === false ? "opacity-55" : "",
                   ].join(" ")}
                 >
-                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[8px] border border-line bg-shell">
+                  <div className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-[10px] border border-adm-border bg-adm-border/40">
                     {item.image ? (
                       <Image
                         src={item.image}
@@ -359,20 +362,20 @@ export function MenuManager() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-2">
-                      <p className="font-medium text-ink">{item.name}</p>
+                      <p className="font-medium text-adm-ink">{item.name}</p>
                       {item.published === false ? (
-                        <span className="rounded-full border border-line px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-faint">
+                        <span className="rounded-full border border-adm-border px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-adm-faint">
                           Sin publicar
                         </span>
                       ) : null}
                       {item.unit ? (
-                        <span className="text-[0.78rem] text-faint">
+                        <span className="text-[0.78rem] text-adm-faint">
                           {item.unit}
                         </span>
                       ) : null}
                     </div>
                     {item.description ? (
-                      <p className="mt-0.5 line-clamp-2 text-[0.85rem] text-muted">
+                      <p className="mt-0.5 line-clamp-2 text-[0.85rem] text-adm-muted">
                         {item.description}
                       </p>
                     ) : null}
@@ -380,7 +383,7 @@ export function MenuManager() {
                       {item.tags.map((t) => (
                         <span
                           key={t}
-                          className="rounded-full border border-line px-2 py-0.5 text-[0.68rem] text-muted"
+                          className="rounded-full border border-adm-border px-2 py-0.5 text-[0.68rem] text-adm-muted"
                         >
                           {sectionLabels[t]}
                         </span>
@@ -388,28 +391,28 @@ export function MenuManager() {
                     </div>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-2">
-                    <span className="tabular-nums text-[0.9rem] text-ink-soft">
+                    <span className="tabular-nums text-[0.9rem] text-adm-ink">
                       {formatPrice(item.price)}
                     </span>
                     <div className="flex gap-2 text-[0.78rem]">
                       <button
                         type="button"
                         onClick={() => togglePublished(item.id)}
-                        className="text-muted hover:text-ink"
+                        className="text-adm-muted hover:text-adm-ink"
                       >
                         {item.published === false ? "Publicar" : "Despublicar"}
                       </button>
                       <button
                         type="button"
                         onClick={() => startEdit(item)}
-                        className="text-muted hover:text-ink"
+                        className="text-adm-muted hover:text-adm-ink"
                       >
                         Editar
                       </button>
                       <button
                         type="button"
                         onClick={() => remove(item.id)}
-                        className="text-muted hover:text-[#d98a6a]"
+                        className="text-adm-muted hover:text-[#b0442e]"
                       >
                         Eliminar
                       </button>

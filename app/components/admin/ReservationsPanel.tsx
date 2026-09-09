@@ -16,9 +16,9 @@ const FILTERS: { key: "todas" | ReservationStatus; label: string }[] = [
 ];
 
 const chip: Record<ReservationStatus, string> = {
-  pendiente: "border-gold/50 bg-gold/15 text-gold",
-  confirmada: "border-[#7FB37E]/50 bg-[#7FB37E]/15 text-[#8fca8c]",
-  rechazada: "border-line bg-mist text-faint",
+  pendiente: "border-[#E0A82E]/40 bg-[#F5C542]/15 text-[#8a5c10]",
+  confirmada: "border-[#7FB37E]/40 bg-[#7FB37E]/12 text-[#3f7d3c]",
+  rechazada: "border-adm-border bg-adm-bg text-adm-faint",
 };
 
 const dateFmt = new Intl.DateTimeFormat("es-UY", {
@@ -57,9 +57,7 @@ export function ReservationsPanel({
   }, [reservations, filter]);
 
   const setStatus = (r: ReservationRequest, status: ReservationStatus) => {
-    onChange(
-      reservations.map((x) => (x.id === r.id ? { ...x, status } : x)),
-    );
+    onChange(reservations.map((x) => (x.id === r.id ? { ...x, status } : x)));
     if (status === "confirmada" || status === "rechazada") {
       setToast(
         `Reserva de ${firstName(r.name)} marcada como ${statusLabels[status].toLowerCase()}.`,
@@ -84,8 +82,8 @@ export function ReservationsPanel({
               className={[
                 "rounded-full border px-3.5 py-1.5 text-[0.8rem] transition-colors",
                 filter === f.key
-                  ? "border-ink bg-ink text-canvas"
-                  : "border-line text-muted hover:border-ink/40 hover:text-ink",
+                  ? "border-adm-sidebar bg-adm-sidebar text-white"
+                  : "border-adm-border text-adm-muted hover:border-adm-sidebar/40 hover:text-adm-ink",
               ].join(" ")}
             >
               {f.label}
@@ -99,12 +97,12 @@ export function ReservationsPanel({
         {rows.map((r) => (
           <li
             key={r.id}
-            className="rounded-[14px] border border-line bg-mist/40 p-4 sm:p-5"
+            className="rounded-[14px] border border-adm-border bg-adm-panel p-4 shadow-[0_1px_2px_rgba(51,37,30,0.04)] sm:p-5"
           >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="font-medium text-ink">{r.name}</p>
-                <p className="mt-0.5 text-[0.88rem] text-muted">
+                <p className="font-medium text-adm-ink">{r.name}</p>
+                <p className="mt-0.5 text-[0.88rem] text-adm-muted">
                   {dateFmt.format(new Date(`${r.date}T00:00:00`))} · {r.time} ·{" "}
                   {r.guests} {r.guests === 1 ? "persona" : "personas"} ·{" "}
                   {r.seating}
@@ -118,30 +116,30 @@ export function ReservationsPanel({
             </div>
 
             {r.note ? (
-              <p className="mt-3 border-l-2 border-line pl-3 text-[0.85rem] italic leading-relaxed text-muted">
+              <p className="mt-3 border-l-2 border-adm-border pl-3 text-[0.85rem] italic leading-relaxed text-adm-muted">
                 {r.note}
               </p>
             ) : null}
 
-            <div className="mt-4 border-t border-line/60 pt-3">
-              <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-faint">
+            <div className="mt-4 border-t border-adm-border pt-3">
+              <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-adm-faint">
                 Contacto
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.85rem]">
                 {r.phone ? (
                   <>
-                    <span className="tabular-nums text-muted">{r.phone}</span>
+                    <span className="tabular-nums text-adm-muted">{r.phone}</span>
                     <a
                       href={`https://wa.me/${toDigits(r.phone)}?text=${encodeURIComponent(confirmMessage(r))}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-medium text-[#8fca8c] transition-colors hover:text-[#a7d6a4]"
+                      className="font-medium text-[#2f8f45] transition-colors hover:text-[#256f37]"
                     >
                       WhatsApp
                     </a>
                     <a
                       href={`tel:${toDigits(r.phone)}`}
-                      className="font-medium text-ink transition-colors hover:text-gold-soft"
+                      className="font-medium text-adm-ink transition-colors hover:text-adm-sidebar"
                     >
                       Llamar
                     </a>
@@ -149,19 +147,19 @@ export function ReservationsPanel({
                 ) : null}
                 {r.email ? (
                   <>
-                    <span className="text-muted">{r.email}</span>
+                    <span className="text-adm-muted">{r.email}</span>
                     <a
                       href={`mailto:${r.email}?subject=${encodeURIComponent(
                         "Tu reserva en Pizzeria",
                       )}&body=${encodeURIComponent(confirmMessage(r))}`}
-                      className="font-medium text-ink transition-colors hover:text-gold-soft"
+                      className="font-medium text-adm-ink transition-colors hover:text-adm-sidebar"
                     >
                       Email
                     </a>
                   </>
                 ) : null}
                 {!r.phone && !r.email ? (
-                  <span className="text-faint">Sin datos de contacto</span>
+                  <span className="text-adm-faint">Sin datos de contacto</span>
                 ) : null}
               </div>
             </div>
@@ -173,9 +171,7 @@ export function ReservationsPanel({
                 </Action>
               ) : null}
               {r.status !== "rechazada" ? (
-                <Action onClick={() => setStatus(r, "rechazada")}>
-                  Rechazar
-                </Action>
+                <Action onClick={() => setStatus(r, "rechazada")}>Rechazar</Action>
               ) : null}
               {r.status !== "pendiente" ? (
                 <Action subtle onClick={() => setStatus(r, "pendiente")}>
@@ -186,14 +182,14 @@ export function ReservationsPanel({
           </li>
         ))}
         {rows.length === 0 ? (
-          <li className="rounded-[14px] border border-dashed border-line p-8 text-center text-[0.9rem] text-faint">
+          <li className="rounded-[14px] border border-dashed border-adm-border p-8 text-center text-[0.9rem] text-adm-faint">
             Sin reservas en este filtro.
           </li>
         ) : null}
       </ul>
 
       {toast ? (
-        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border border-line bg-ink px-4 py-2.5 text-[0.85rem] text-canvas shadow-lg">
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-adm-ink px-4 py-2.5 text-[0.85rem] text-white shadow-lg">
           {toast}
         </div>
       ) : null}
@@ -217,8 +213,8 @@ function Action({
       className={[
         "rounded-full px-3.5 py-1.5 text-[0.8rem] font-medium transition-colors",
         subtle
-          ? "text-muted hover:text-ink"
-          : "border border-line text-ink hover:border-ink",
+          ? "text-adm-muted hover:text-adm-ink"
+          : "border border-adm-border text-adm-ink hover:border-adm-sidebar hover:text-adm-sidebar",
       ].join(" ")}
     >
       {children}

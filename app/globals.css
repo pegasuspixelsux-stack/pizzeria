@@ -19,6 +19,16 @@
   --color-ocean: #ffd166; /* interactive — text links, active controls, focus */
   --color-ocean-deep: #f5c542; /* link / control hover */
 
+  /* Admin workspace — light management surface with the terracotta sidebar */
+  --color-adm-bg: #fdfbf7; /* soft-white workspace */
+  --color-adm-panel: #ffffff; /* white cards, forms, tables */
+  --color-adm-ink: #33251e; /* warm near-black text */
+  --color-adm-muted: #6e5f55; /* secondary text */
+  --color-adm-faint: #9c8c81; /* fine print, placeholders */
+  --color-adm-border: #ebe4dc; /* hairlines, dividers */
+  --color-adm-sidebar: #8b3a2b; /* terracotta sidebar */
+  --color-adm-sidebar-deep: #7c2d12; /* sidebar hover / active */
+
   --font-display: var(--ff-display), "Playfair Display", ui-serif, Georgia, serif;
   --font-sans: var(--ff-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui,
     sans-serif;
