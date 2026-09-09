@@ -54,7 +54,7 @@ export function Reservation() {
 
           <div className="mt-10 border-t border-line pt-6">
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-muted">
-              Or call the room
+              O llamá al salón
             </p>
             <a
               href={contact.phoneHref}
@@ -63,7 +63,7 @@ export function Reservation() {
               {contact.phoneLabel}
             </a>
             <p className="mt-1 text-[0.85rem] text-muted">
-              {contact.street}, {contact.area.split(",")[0]}
+              Península · Maldonado · Solanas
             </p>
           </div>
         </div>
@@ -78,7 +78,7 @@ export function Reservation() {
           <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
             <div>
               <label className={labelBase} htmlFor={`${uid}-date`}>
-                Date
+                Fecha
               </label>
               <input
                 id={`${uid}-date`}
@@ -93,24 +93,24 @@ export function Reservation() {
 
             <SelectField
               id={`${uid}-time`}
-              label="Time"
+              label="Hora"
               value={form.time}
-              placeholder="Select a time"
+              placeholder="Elegí un horario"
               options={reservation.times}
               onChange={set("time")}
             />
 
             <SelectField
               id={`${uid}-guests`}
-              label="Guests"
+              label="Personas"
               value={form.guests}
-              placeholder="How many?"
+              placeholder="¿Cuántos?"
               options={reservation.guests}
               onChange={set("guests")}
             />
 
             <div>
-              <span className={labelBase}>Seating</span>
+              <span className={labelBase}>Ubicación</span>
               <div className="mt-3 flex flex-wrap gap-2">
                 {reservation.seatings.map((s) => (
                   <button
@@ -133,7 +133,7 @@ export function Reservation() {
 
             <div className="sm:col-span-2">
               <label className={labelBase} htmlFor={`${uid}-name`}>
-                Name
+                Nombre
               </label>
               <input
                 id={`${uid}-name`}
@@ -141,7 +141,7 @@ export function Reservation() {
                 autoComplete="name"
                 value={form.name}
                 onChange={(e) => set("name")(e.target.value)}
-                placeholder="The name for the table"
+                placeholder="El nombre para la mesa"
                 className={fieldBase}
                 required
               />
@@ -164,8 +164,8 @@ export function Reservation() {
                     className="inline-flex items-center gap-2 text-ocean"
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                    Noted, {form.name.trim().split(" ")[0]} — this mockup stops
-                    here.
+                    Anotado, {form.name.trim().split(" ")[0]} — la maqueta
+                    termina acá.
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -176,7 +176,7 @@ export function Reservation() {
               disabled={!ready}
               className="rounded-full bg-ink px-7 py-3 text-[0.85rem] font-semibold tracking-wide text-canvas transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] enabled:hover:-translate-y-0.5 enabled:hover:bg-ink-soft enabled:hover:shadow-[0_16px_36px_-16px_rgba(15,23,42,0.5)] disabled:cursor-not-allowed disabled:bg-shell disabled:text-muted"
             >
-              Request this table
+              Pedir esta mesa
             </button>
           </div>
         </form>
@@ -212,11 +212,11 @@ function SelectField({
         required
         className={`${fieldBase} pr-7 ${value === "" ? "text-faint" : ""}`}
       >
-        <option value="" disabled>
+        <option value="" disabled className="bg-[#2b1710] text-faint">
           {placeholder}
         </option>
         {options.map((o) => (
-          <option key={o} value={o} className="text-ink">
+          <option key={o} value={o} className="bg-[#2b1710] text-[#fdfbf7]">
             {o}
           </option>
         ))}

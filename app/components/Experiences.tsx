@@ -17,7 +17,7 @@ export function Experiences() {
       <div className="mx-auto max-w-[84rem] px-5 sm:px-8">
         <Reveal className="pt-[var(--spacing-section)]">
           <h2 className="font-display text-[clamp(1.9rem,4.4vw,3.1rem)] font-medium leading-[1.08] tracking-[-0.02em] text-ink">
-            Three services, one room
+            Tres servicios, un horno
           </h2>
         </Reveal>
 
@@ -30,7 +30,7 @@ export function Experiences() {
             return (
               <article
                 key={exp.id}
-                id={exp.id === "the-cocktail-bar" ? "cocktail-bar" : undefined}
+                id={exp.id === "the-bar" ? "bar" : undefined}
                 className="group grid scroll-mt-24 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16"
               >
                 <Reveal

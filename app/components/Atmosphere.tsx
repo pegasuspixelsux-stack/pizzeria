@@ -16,7 +16,7 @@ export function Atmosphere() {
         >
           <Image
             src={img.atmosphere}
-            alt="Morning light over a calm shoreline, gulls low over the water."
+            alt="Amigos compartiendo pizza al horno de leña en una mesa al aire libre."
             fill
             sizes="(min-width: 1024px) 52vw, 100vw"
             className="object-cover"

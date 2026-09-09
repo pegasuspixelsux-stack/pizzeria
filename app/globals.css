@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light coastal palette — pristine whites, pale sea/sand tints, ink text */
-  --color-canvas: #ffffff;
-  --color-mist: #f7f9fc;
-  --color-sand: #eff3f8;
-  --color-shell: #e6ecf3;
+  /* Warm brick palette — wood-fired oven tones, cream/tan text, gold accents.
+     Surfaces layer terracotta > brick > rust > deep rust, back to front. */
+  --color-canvas: #8b3a2b; /* primary surface — body, cards, nav */
+  --color-mist: #7c2d12; /* deeper section tint — Hero, Experiences, Footer */
+  --color-sand: #6b2410; /* deepest section — Reservation (card floats on it) */
+  --color-shell: #a04735; /* terracotta — image placeholder, disabled fill */
 
-  --color-ink: #0f172a;
-  --color-ink-soft: #1e293b;
-  --color-muted: #64748b;
-  --color-faint: #94a3b8;
-  --color-line: #e2e8f0;
+  --color-ink: #fdfbf7; /* cream — headings, primary text, solid buttons */
+  --color-ink-soft: #f0e6da; /* warm off-white — secondary text */
+  --color-muted: #e5d5c5; /* tan — body / supporting text */
+  --color-faint: #d9c6b2; /* dim tan — placeholders, fine print */
+  --color-line: #9e5140; /* warm hairline borders, dividers */
 
-  --color-gold: #c29b38;
-  --color-gold-soft: #d8b866;
-  --color-ocean: #0e5a76;
-  --color-ocean-deep: #0b475e;
+  --color-gold: #f5c542; /* accent — brand dot, datelines, chevrons, hairlines */
+  --color-gold-soft: #ffd166; /* sunburst — gold hover / lighter accent */
+  --color-ocean: #ffd166; /* interactive — text links, active controls, focus */
+  --color-ocean-deep: #f5c542; /* link / control hover */
 
   --font-display: var(--ff-display), "Playfair Display", ui-serif, Georgia, serif;
   --font-sans: var(--ff-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui,
@@ -75,7 +76,7 @@
     border: 3px solid var(--color-mist);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #cdd8e3;
+    background: #b5604d;
   }
 
   * {
@@ -106,7 +107,7 @@
     );
   }
 
-  /* Bright daylight scrims — pale, not dark vignettes */
+  /* Warm brick scrims — the photo settles into the page's oven tones */
   .scrim-hero {
     background:
       linear-gradient(

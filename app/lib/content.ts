@@ -1,158 +1,272 @@
 /**
- * Static content for the Trattoria homepage mockup.
+ * Contenido estático para la maqueta de la home de Pizzeria.
  *
- * Trattoria is not a real business. Address, phone, hours and prices below are
- * plausible placeholders for Punta del Este / La Barra — swap them for real
- * details before any production use.
+ * Pizzeria no es un negocio real. La dirección, el teléfono, el horario y los
+ * precios de abajo son marcadores plausibles para Punta del Este / La Barra —
+ * reemplazalos por datos reales antes de cualquier uso en producción.
  *
- * Photography: Unsplash (unsplash.com/license). Replace the `photo` IDs with
- * licensed or owned imagery and credit the photographers as needed:
- *   hero        photo-1507525428034-b723cf961d3e
- *   lunch       photo-1559339352-11d035aa65de
- *   dinner      photo-1414235077428-338989a2e8c0
- *   cocktails   photo-1470337458703-46ad1756a187
- *   atmosphere  photo-1471922694854-ff1b63b20054
+ * Fotografía: Unsplash (unsplash.com/license). Reemplazá los IDs `photo` por
+ * imágenes con licencia o propias y acreditá a los fotógrafos según haga falta:
+ *   hero        photo-1513104890138-7c749659a591
+ *   midday      photo-1574071318508-1cdbab80d002
+ *   dinner      photo-1571997478779-2adcbbe9ab2f
+ *   bar         photo-1590947132387-155cc02f3212
+ *   atmosphere  photo-1600628421055-4d30de868b8f
  */
 
 const U = "https://images.unsplash.com/photo-";
 const q = "&q=80&auto=format&fit=crop";
 
 export const img = {
-  hero: `${U}1507525428034-b723cf961d3e?w=2200&ar=16:10${q}`,
-  lunch: `${U}1559339352-11d035aa65de?w=1400&ar=1:1${q}`,
-  dinner: `${U}1414235077428-338989a2e8c0?w=1400&ar=1:1${q}`,
-  cocktails: `${U}1470337458703-46ad1756a187?w=1400&ar=1:1${q}`,
-  atmosphere: `${U}1471922694854-ff1b63b20054?w=1700&ar=4:3${q}`,
+  hero: `${U}1513104890138-7c749659a591?w=2200&ar=16:10${q}`,
+  midday: `${U}1574071318508-1cdbab80d002?w=1400&ar=1:1${q}`,
+  dinner: `${U}1571997478779-2adcbbe9ab2f?w=1400&ar=1:1${q}`,
+  bar: `${U}1590947132387-155cc02f3212?w=1400&ar=1:1${q}`,
+  atmosphere: `${U}1600628421055-4d30de868b8f?w=1700&ar=4:3${q}`,
 };
 
 export const nav = [
-  { label: "Restaurant", href: "#experiences" },
-  { label: "Cocktail Bar", href: "#cocktail-bar" },
-  { label: "Events", href: "#atmosphere" },
+  { label: "La Carta", href: "/menu" },
+  { label: "La Pizza", href: "/#experiences" },
+  { label: "Bar", href: "/#bar" },
+  { label: "Eventos", href: "/#atmosphere" },
 ] as const;
 
 export const hero = {
   place: "Punta del Este — Uruguay",
-  title: ["A table where", "the coast meets", "the evening."],
+  title: ["Horno a leña,", "masa artesanal,", "y aire de mar."],
   subtitle:
-    "A coastal kitchen and cocktail bar on the Rambla — one room, three lights: the long lunch, the golden hour, the last drink.",
-  cta: "Discover the evening",
+    "Una pizzería napolitana sobre la Rambla — masa de fermentación lenta, tomate San Marzano, muzzarella fior di latte y un horno a 450 °C que hace una pizza en noventa segundos.",
+  cta: "Ver la pizza",
 };
 
-export const narrative = "One place, moments that change with the light.";
+export const narrative = "Un horno, una masa que cambia con el día.";
 
 export const experiences = [
   {
-    id: "the-lunch",
+    id: "the-midday",
     kicker: "12:30 — 16:00",
-    title: "The Lunch",
-    body: "Tables open to the water, a short menu built on the morning's catch and market vegetables, and wine by the glass poured until the afternoon runs out.",
-    image: img.lunch,
-    alt: "A dining terrace set with white linen looking out over the sea at Punta del Este.",
-    link: "Reserve for lunch",
+    title: "El Mediodía",
+    body: "Mesas abiertas al agua, una carta corta que sale de la masa de la mañana y de lo que mandó la feria, y vino por copa hasta que se termina la tarde.",
+    image: img.midday,
+    alt: "Una pizza margarita napolitana de borde alto y leopardeado sobre una mesa de mármol.",
+    link: "Reservá una mesa para el mediodía",
     detail: {
-      trigger: "On the plate today",
-      lead: "The lunch menu is rewritten each morning. A recent day looked like this:",
+      trigger: "Hoy en la carta",
+      lead: "La carta del mediodía es corta y casi toda roja. Un día reciente fue así:",
       items: [
-        "Raw brótola, lime, green almond, olive oil from Garzón",
-        "Grilled provoleta, oregano, toasted sourdough",
-        "Whole day-boat fish for two, salsa verde, burnt lemon",
-        "Dulce de leche semifreddo, sea salt",
+        "Muzzarella — salsa de tomate casera, muzzarella fior di latte, aceitunas y orégano",
+        "Margarita — San Marzano, muzzarella de búfala, albahaca",
+        "Fugazzeta — cebolla dulce, muzzarella y provolone, doble masa",
+        "Marinara — tomate, ajo, orégano, aceite de Garzón (sin queso)",
       ],
     },
   },
   {
     id: "the-dinner",
     kicker: "20:00 — 00:00",
-    title: "The Dinner",
-    body: "The room turns low and warm. Tasting plates and larger cuts from the grill, candlelight on the glassware, and the coast going dark beyond the windows.",
+    title: "La Cena",
+    body: "La sala baja la luz y se pone cálida. La carta entera — entradas, fritos y pizzas que salen del horno de a una, de la Calabresa a la Margarita — velas sobre las copas, y la costa oscureciéndose del otro lado de las ventanas.",
     image: img.dinner,
-    alt: "A plated fine-dining course with wine glasses in a warmly lit restaurant.",
-    link: "Reserve for dinner",
+    alt: "Dos pizzas al horno de leña sobre una mesa oscura con luz tenue, albahaca fresca encima.",
+    link: "Reservá una mesa para la cena",
     detail: {
-      trigger: "Good to know",
-      lead: "A few notes before you book the evening service:",
+      trigger: "Bueno saber",
+      lead: "Algunas notas antes de reservar el servicio de la noche:",
       items: [
-        "Smart-casual — no formal dress code, but the room dims low",
-        "Last seating at 23:00; the kitchen closes at midnight",
-        "The chef's counter (six seats) is booked by phone only",
-        "Tasting menu for the full table, with a shorter à la carte list",
+        "Cada pizza se hace al momento — llegan de a una, no todas juntas",
+        "Último pedido al horno 23:30; la cocina cierra a medianoche",
+        "La barra junto al horno (seis lugares) se reserva solo por teléfono",
+        "Bases sin gluten avisando, aunque el horno es compartido",
       ],
     },
   },
   {
-    id: "the-cocktail-bar",
-    kicker: "19:00 — late",
-    title: "The Cocktail Bar",
-    body: "Stirred and built drinks at the marble counter, an amaro shelf worth staying for, and a smaller list of snacks from the same kitchen until close.",
-    image: img.cocktails,
-    alt: "A bartender straining an amber cocktail over a large ice cube in a dim bar.",
-    link: "See the bar",
+    id: "the-bar",
+    kicker: "19:00 — tarde",
+    title: "El Bar",
+    body: "Fritos y sfizi en la barra de mármol — crocchè, montanarine, pizza fritta — una estantería de amari que vale quedarse, y una carta corta del mismo horno hasta cerrar.",
+    image: img.bar,
+    alt: "Una mano levantando una porción de pizza al horno de leña en una barra de mármol.",
+    link: "Ver el bar",
     detail: {
-      trigger: "From the bar",
-      lead: "The list changes with the season. House pours that tend to stay:",
+      trigger: "Desde la barra",
+      lead: "La carta se mueve con la temporada. Los fijos que se quedan:",
       items: [
-        "Rambla Negroni — Uruguayan gin, Amaro Montenegro, blood orange",
-        "Faro Sour — pisco, quince, egg white, Andes bitters",
-        "Clarified paloma, grapefruit oil, mezcal float",
-        "A rotating amaro flight of three, poured at the counter",
+        "Negroni sbagliato — Campari, vermut de Torino, Prosecco",
+        "Aperol spritz, naranja siciliana, borde con sal de mar",
+        "Fainá recién hecha y una copa de moscato",
+        "Pizza fritta — ricota, pimienta negra, tomate, frita al momento",
       ],
     },
   },
 ] as const;
 
 export const atmosphere = {
-  title: ["We keep the hours", "the sea keeps."],
+  title: ["Seguimos el horario", "que marca el horno."],
   paragraphs: [
-    "Punta del Este slows down and speeds up with the season and the tide. We built the room around that — long open windows, a terrace that follows the sun, and a menu rewritten as often as the fishermen change what they bring us.",
-    "Private dinners, tastings and small celebrations take the east room or the whole terrace. Tell us the occasion and the number, and we will shape an evening around the light you want to be in.",
+    "La masa madre se alimenta dos veces por día y se amasa a mano cada mañana, así que la pizza cambia un poco con el clima y con la sala. Armamos el lugar alrededor del horno — ventanales abiertos, una terraza que sigue el sol, y una barra desde donde se ve el fuego.",
+    "Cenas privadas, degustaciones y celebraciones chicas toman la sala este o toda la terraza. Contanos la ocasión y cuántos son, y armamos un menú alrededor del horno.",
   ],
-  cta: "Enquire about events",
+  cta: "Consultá por eventos",
 };
 
+export const reviewsIntro = {
+  title: "Opiniones",
+  lede: "Testimonios ilustrativos para la demo — texto de muestra, no reseñas reales.",
+};
+
+export const reviews = [
+  {
+    author: "Comensal local",
+    rating: 5,
+    quote:
+      "Una joya para cualquiera que aprecie la pizza auténtica y un ambiente divino. La salsa casera es fresca y llena de sabor, y las pizzas salen perfectas del horno a leña.",
+    meta: "$600–800",
+  },
+  {
+    author: "Pareja de Montevideo",
+    rating: 5,
+    quote:
+      "Excelente pizzería. Casi siempre se llena, así que conviene llegar temprano o esperar un rato. El prosecco está buenísimo.",
+    meta: "$1.400–1.600",
+  },
+  {
+    author: "Visitante de temporada",
+    rating: 5,
+    quote:
+      "Un lugar muy lindo con pizza al estilo italiano auténtico. Probé la de prosciutto, parmesano y rúcula y estaba deliciosa. Súper recomendable si visitás Punta del Este.",
+    meta: "Cena",
+  },
+  {
+    author: "Turista de Buenos Aires",
+    rating: 5,
+    quote:
+      "Sin ninguna duda, por lejos la mejor pizza estilo italiano de Uruguay, no solo de Punta del Este.",
+    meta: "Comer allí",
+  },
+  {
+    author: "Familia, Punta del Este",
+    rating: 5,
+    quote:
+      "Cuando estés en Punta no te podés perder este lugar. Ambiente increíble y pizzas al horno de leña espectaculares. Probé la fugazzeta y la italiana, buenísimas las dos.",
+    meta: "$800–1.000",
+  },
+  {
+    author: "Cliente habitual",
+    rating: 5,
+    quote:
+      "Pizza rica a precio razonable y gran ambiente. El volcán con dulce de leche impresionante. Con una pizza y una fainá alcanza perfecto para dos.",
+    meta: "Cena",
+  },
+] as const;
+
+export const galleryIntro = {
+  title: "Un vistazo al local",
+  lede: "El horno, los platos y algunos momentos.",
+};
+
+export const gallery = [
+  { src: img.hero, alt: "Del horno a leña", size: "hero" },
+  { src: img.midday, alt: "Margherita apenas salida", size: "square" },
+  {
+    src: `${U}1590534247854-e97d5e3feef6?w=1400&ar=3:4${q}`,
+    alt: "La mesa cuando baja la luz",
+    size: "tall",
+  },
+  {
+    src: `${U}1536935338788-846bb9981813?w=1200&ar=1:1${q}`,
+    alt: "De la barra",
+    size: "square",
+  },
+  {
+    src: `${U}1509440159596-0249088772ff?w=1800&ar=21:9${q}`,
+    alt: "Pan del día y entradas",
+    size: "wide",
+  },
+  {
+    src: `${U}1571877227200-a0d98ea607e9?w=1200&ar=1:1${q}`,
+    alt: "Postres de la casa",
+    size: "square",
+  },
+  {
+    src: `${U}1544982503-9f984c14501a?w=1200&ar=1:1${q}`,
+    alt: "Una porción y una birra",
+    size: "square",
+  },
+] as const;
+
 export const reservation = {
-  title: "Reserve a table",
-  lede: "Tell us when, and for how many. We hold the terrace and the dining room separately, so choose the room you want to be in.",
-  note: "Design mockup — the form does not send anything. For a real booking, call the number below.",
+  title: "Reservá una mesa",
+  lede: "Decinos cuándo y para cuántos. Guardamos la terraza y el salón por separado, así que elegí la sala donde querés estar.",
+  note: "Maqueta de diseño — el formulario no envía nada. Para una reserva real, llamá al número de abajo.",
   times: ["12:30", "13:30", "15:00", "20:00", "20:30", "21:15", "22:00"],
-  guests: ["1 guest", "2 guests", "3 guests", "4 guests", "5 guests", "6 guests", "7+ — call us"],
-  seatings: ["Terrace", "Dining room", "Cocktail bar"],
+  guests: [
+    "1 persona",
+    "2 personas",
+    "3 personas",
+    "4 personas",
+    "5 personas",
+    "6 personas",
+    "7+ — llamanos",
+  ],
+  seatings: ["Terraza", "Salón", "Barra junto al horno"],
 };
 
 export const contact = {
-  street: "Rambla Gral. Artigas, parada 6",
-  area: "La Barra, Maldonado 20003",
-  country: "Punta del Este, Uruguay",
   phoneLabel: "+598 42 77 21 40",
   phoneHref: "tel:+59842772140",
-  emailLabel: "mesa@trattoria.uy",
-  emailHref: "mailto:mesa@trattoria.uy",
+  emailLabel: "hola@pizzeria.uy",
+  emailHref: "mailto:hola@pizzeria.uy",
 };
 
-export const hours = [
-  { days: "Monday", value: "Closed" },
-  { days: "Tuesday — Thursday", value: "12:30 – 16:00 · 20:00 – 00:00" },
-  { days: "Friday — Saturday", value: "12:30 – 16:00 · 20:00 – 01:00" },
-  { days: "Sunday", value: "12:30 – 17:00" },
+export const locations = [
+  {
+    id: "peninsula",
+    name: "Península",
+    address: "Calle 20 (El Bulevar) esq. 27, Punta del Este",
+    phoneLabel: "+598 42 44 00 00",
+    phoneHref: "tel:+59842440000",
+    hours: "Miércoles a lunes · 19:30 – 00:00",
+  },
+  {
+    id: "maldonado",
+    name: "Maldonado",
+    address: "Av. Roosevelt esq. Dodera, Maldonado",
+    phoneLabel: "+598 42 25 00 00",
+    phoneHref: "tel:+59842250000",
+    hours: "Martes a domingo · 19:00 – 23:30",
+  },
+  {
+    id: "solanas",
+    name: "Solanas",
+    address: "Ruta 10 Km 118, Portezuelo",
+    phoneLabel: "+598 42 57 00 00",
+    phoneHref: "tel:+59842570000",
+    hours: "Todos los días · 12:00 – 00:00",
+  },
 ];
 
 export const footerLinks = [
   {
-    heading: "Visit",
+    heading: "Visitá",
     items: [
-      { label: "Restaurant", href: "#experiences" },
-      { label: "Cocktail Bar", href: "#cocktail-bar" },
-      { label: "Private events", href: "#atmosphere" },
-      { label: "Reserve a table", href: "#reserve" },
+      { label: "La Carta", href: "/menu" },
+      { label: "La Pizza", href: "/#experiences" },
+      { label: "Bar", href: "/#bar" },
+      { label: "Eventos privados", href: "/#atmosphere" },
+      { label: "Galería", href: "/#galeria" },
+      { label: "Opiniones", href: "/#opiniones" },
+      { label: "Reservá una mesa", href: "/#reserve" },
     ],
   },
   {
-    heading: "Kitchen",
+    heading: "Cocina",
     items: [
-      { label: "Sample menu", href: "#experiences" },
-      { label: "Wine & amaro list", href: "#cocktail-bar" },
-      { label: "Dietary notes", href: "#reserve" },
-      { label: "Gift certificates", href: "#reserve" },
+      { label: "La Carta completa", href: "/menu" },
+      { label: "Vinos y amari", href: "/#bar" },
+      { label: "Notas dietéticas", href: "/#reserve" },
+      { label: "Tarjetas de regalo", href: "/#reserve" },
     ],
   },
 ];

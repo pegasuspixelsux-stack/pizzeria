@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { nav } from "../lib/content";
 
@@ -36,41 +37,41 @@ export function SiteHeader() {
         ].join(" ")}
       >
         <div className="mx-auto flex h-[4.5rem] max-w-[84rem] items-center justify-between px-5 sm:px-8 lg:h-20">
-          <a
-            href="#top"
+          <Link
+            href="/#top"
             className={[
               "font-display text-[1.35rem] leading-none tracking-[-0.01em] transition-colors duration-500 lg:text-[1.5rem]",
               solid ? "text-ink" : "text-ink",
             ].join(" ")}
           >
-            Trattoria<span className="text-gold">.</span>
-          </a>
+            Pizzeria<span className="text-gold">.</span>
+          </Link>
 
           <nav className="hidden items-center gap-9 md:flex">
             {nav.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="group relative py-1 text-[0.82rem] font-medium tracking-wide text-ink-soft/80 transition-colors duration-300 hover:text-ink"
               >
                 {item.label}
                 <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
-              href="#reserve"
+            <Link
+              href="/#reserve"
               className="hidden rounded-full border border-ink/20 px-5 py-2.5 text-[0.8rem] font-semibold tracking-wide text-ink transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-ink hover:bg-ink hover:text-canvas sm:inline-block"
             >
-              Reserve a Table
-            </a>
+              Reservá una mesa
+            </Link>
 
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={open}
               className="flex h-10 w-10 items-center justify-center md:hidden"
             >
@@ -110,22 +111,22 @@ export function SiteHeader() {
           >
             <nav className="mx-auto flex max-w-[84rem] flex-col px-5 py-4 sm:px-8">
               {nav.map((item) => (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className="border-b border-line py-4 font-display text-xl text-ink last:border-0"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#reserve"
+              <Link
+                href="/#reserve"
                 onClick={() => setOpen(false)}
                 className="mt-4 rounded-full bg-ink px-5 py-3 text-center text-sm font-semibold tracking-wide text-canvas"
               >
-                Reserve a Table
-              </a>
+                Reservá una mesa
+              </Link>
             </nav>
           </motion.div>
         )}

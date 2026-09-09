@@ -1,4 +1,5 @@
-import { contact, footerLinks, hours } from "../lib/content";
+import Link from "next/link";
+import { contact, footerLinks, locations } from "../lib/content";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -9,12 +10,12 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div className="max-w-[34ch]">
             <p className="font-display text-2xl tracking-[-0.01em] text-ink">
-              Trattoria<span className="text-gold">.</span>
+              Pizzeria<span className="text-gold">.</span>
             </p>
             <p className="mt-4 text-[0.92rem] leading-relaxed text-muted">
-              A coastal restaurant and cocktail bar on the Rambla in Punta del
-              Este. Lunch on the terrace, dinner at golden hour, the last drink
-              after midnight.
+              Una pizzería napolitana sobre la Rambla en Punta del Este. Pizzas
+              al horno de leña, una carta corta, y una barra desde donde se ve
+              el horno.
             </p>
           </div>
 
@@ -26,12 +27,12 @@ export function SiteFooter() {
               <ul className="mt-5 space-y-3">
                 {col.items.map((item) => (
                   <li key={item.label}>
-                    <a
+                    <Link
                       href={item.href}
                       className="text-[0.92rem] text-muted transition-colors duration-300 hover:text-ink"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -40,13 +41,12 @@ export function SiteFooter() {
 
           <div>
             <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-gold">
-              Find us
+              Reservas
             </h3>
-            <address className="mt-5 space-y-1 text-[0.92rem] not-italic leading-relaxed text-muted">
-              <p>{contact.street}</p>
-              <p>{contact.area}</p>
-              <p>{contact.country}</p>
-            </address>
+            <p className="mt-5 text-[0.92rem] leading-relaxed text-muted">
+              Llamá o escribinos y coordinamos la mesa en la sucursal que
+              quieras.
+            </p>
             <div className="mt-4 space-y-1 text-[0.92rem]">
               <a
                 href={contact.phoneHref}
@@ -66,26 +66,35 @@ export function SiteFooter() {
 
         <div className="mt-14 border-t border-line pt-8">
           <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-gold">
-            Hours
+            Sucursales
           </h3>
-          <dl className="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {hours.map((row) => (
-              <div key={row.days} className="flex flex-col gap-0.5">
-                <dt className="text-[0.88rem] font-medium text-ink">
-                  {row.days}
-                </dt>
-                <dd className="text-[0.86rem] tabular-nums text-muted">
-                  {row.value}
-                </dd>
+          <div className="mt-5 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {locations.map((loc) => (
+              <div key={loc.id}>
+                <p className="font-display text-lg tracking-[-0.01em] text-ink">
+                  {loc.name}
+                </p>
+                <address className="mt-2 text-[0.88rem] not-italic leading-relaxed text-muted">
+                  {loc.address}
+                </address>
+                <a
+                  href={loc.phoneHref}
+                  className="mt-1.5 block text-[0.88rem] font-medium text-ink transition-colors duration-300 hover:text-ocean"
+                >
+                  {loc.phoneLabel}
+                </a>
+                <p className="mt-1.5 text-[0.82rem] tabular-nums text-faint">
+                  {loc.hours}
+                </p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
 
         <div className="mt-14 flex flex-col gap-2 border-t border-line pt-8 text-[0.8rem] text-faint sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} Trattoria. A design mockup — not a real business.</p>
+          <p>© {year} Pizzeria. Una maqueta de diseño — no es un negocio real.</p>
           <p>
-            Punta del Este, Uruguay · Photography via{" "}
+            Punta del Este, Uruguay · Fotografía vía{" "}
             <a
               href="https://unsplash.com/license"
               className="text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"

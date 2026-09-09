@@ -16,23 +16,23 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trattoria.example"),
-  title: "Trattoria — Coastal restaurant & cocktail bar, Punta del Este",
+  metadataBase: new URL("https://pizzeria.example"),
+  title: "Pizzeria — Pizza napolitana al horno de leña, Punta del Este",
   description:
-    "A high-end coastal restaurant and cocktail bar on the Rambla in Punta del Este, Uruguay. Lunch on the terrace, dinner at golden hour, cocktails past midnight.",
+    "Una pizzería napolitana sobre la Rambla en Punta del Este, Uruguay. Masa de fermentación lenta, tomate San Marzano y horno a leña a 450 °C. Mediodía en la terraza, pizzas hasta tarde.",
   openGraph: {
-    title: "Trattoria — Punta del Este",
+    title: "Pizzeria — Punta del Este",
     description:
-      "One coastal room, seen through the three lights of a day. Reserve a table on the Rambla.",
+      "Pizza napolitana al horno de leña sobre la Rambla. Reservá una mesa.",
     type: "website",
-    locale: "en_UY",
+    locale: "es_UY",
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${playfair.variable} ${jakarta.variable} antialiased`}
     >
       <body className="min-h-dvh bg-canvas font-sans text-ink">{children}</body>

@@ -1,28 +1,31 @@
-# Trattoria — Design system
+# Pizzeria — Design system
 
-Ground truth for the homepage as built (`app/`). Light, airy coastal editorial —
-one bright room at Punta del Este seen through the three lights of a day.
+Ground truth for the homepage as built (`app/`). Warm brick editorial — one
+room at Punta del Este built around a wood-fired oven, in the oven's own
+tones, seen through the three services of a day. Copy is Spanish (Uruguay).
 
 ## Tokens
 
 Defined in `app/globals.css` under `@theme`. Use the Tailwind utilities they
 generate (`bg-canvas`, `text-ink`, `text-muted`, `border-line`, …).
 
+Surfaces layer terracotta > brick > rust > deep rust, back to front.
+
 | Token | Value | Role |
 | --- | --- | --- |
-| `canvas` | `#ffffff` | Page + card surface |
-| `mist` | `#f7f9fc` | Alternating section background (Experiences, Footer) |
-| `sand` | `#eff3f8` | Reservation section background |
-| `shell` | `#e6ecf3` | Image placeholder, disabled control fill |
-| `ink` | `#0f172a` | Headings, primary text, solid buttons |
-| `ink-soft` | `#1e293b` | Secondary headings, list copy |
-| `muted` | `#64748b` | Body / supporting text |
-| `faint` | `#94a3b8` | Placeholders, fine print |
-| `line` | `#e2e8f0` | Hairline borders, dividers |
-| `gold` | `#c29b38` | Fine accent — brand dot, datelines, chevrons, hairlines, focus fallback |
-| `gold-soft` | `#d8b866` | Gold hover / lighter accent |
-| `ocean` | `#0e5a76` | Text links, active form controls, focus ring |
-| `ocean-deep` | `#0b475e` | Link hover |
+| `canvas` | `#8b3a2b` | Primary surface — body, cards, nav |
+| `mist` | `#7c2d12` | Deeper section tint (Hero, Experiences, Footer) |
+| `sand` | `#6b2410` | Reservation section — the form card floats on it |
+| `shell` | `#a04735` | Terracotta — image placeholder, disabled control fill |
+| `ink` | `#fdfbf7` | Cream — headings, primary text, solid buttons |
+| `ink-soft` | `#f0e6da` | Secondary headings, list copy |
+| `muted` | `#e5d5c5` | Tan — body / supporting text |
+| `faint` | `#d9c6b2` | Dim tan — placeholders, fine print |
+| `line` | `#9e5140` | Warm hairline borders, dividers |
+| `gold` | `#f5c542` | Accent — brand dot, datelines, chevrons, hairlines, focus |
+| `gold-soft` | `#ffd166` | Sunburst — gold hover / lighter accent |
+| `ocean` | `#ffd166` | Interactive — text links, active form controls, focus ring |
+| `ocean-deep` | `#f5c542` | Link / control hover |
 
 Spacing rhythm: `--spacing-section` (`clamp(4.5rem, 10vw, 8.5rem)`) between
 major sections; `--spacing-section-tight` for the narrative interlude.
@@ -61,8 +64,9 @@ Standard easing: `cubic-bezier(0.16, 1, 0.3, 1)` (exponential out).
 ## Layout
 
 `app/page.tsx` composes: `SiteHeader` · `Hero` (full viewport) · `Narrative`
-(centred interlude) · `Experiences` (alternating image/text rows + accordions) ·
-`Atmosphere` (split image/text) · `Reservation` (static form, white card on
+(centred interlude) · `Experiences` (el mediodía / la cena / el bar as
+alternating image/text rows + accordions) · `Atmosphere` (split image/text) ·
+`Reviews` (3-col quote cards on mist) · `Reservation` (static form, card on
 sand) · `SiteFooter` (multi-column + hours). Max content width `84rem`; nav
 links smooth-scroll to section ids.
 
@@ -70,7 +74,7 @@ links smooth-scroll to section ids.
 
 - All content is static; the reservation form does not submit (see
   `app/lib/content.ts`).
-- Contact details, hours and menu items are plausible placeholders for Punta
-  del Este — replace before production.
+- Contact details, hours and menu items are plausible placeholders for a
+  Neapolitan pizzeria in Punta del Este — replace before production.
 - Imagery is Unsplash; photo IDs and the swap list are documented at the top of
   `app/lib/content.ts`.
