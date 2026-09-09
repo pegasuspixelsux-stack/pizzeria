@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import {
   statusLabels,
+  toDigits,
   type ReservationRequest,
   type ReservationStatus,
 } from "../../lib/admin-demo";
@@ -25,6 +26,17 @@ const dateFmt = new Intl.DateTimeFormat("es-UY", {
   day: "numeric",
   month: "short",
 });
+
+function firstName(name: string) {
+  return name.split(" ")[0];
+}
+
+/** Pre-filled confirmation the owner can send by WhatsApp or email. */
+function confirmMessage(r: ReservationRequest) {
+  const when = dateFmt.format(new Date(`${r.date}T00:00:00`));
+  const people = `${r.guests} ${r.guests === 1 ? "persona" : "personas"}`;
+  return `Hola ${firstName(r.name)}, te escribimos de Pizzeria. Confirmamos tu reserva para el ${when} a las ${r.time}, ${people} (${r.seating}). ¡Te esperamos!`;
+}
 
 export function ReservationsPanel({
   reservations,
@@ -50,7 +62,7 @@ export function ReservationsPanel({
     );
     if (status === "confirmada" || status === "rechazada") {
       setToast(
-        `Aviso ${status === "confirmada" ? "de confirmación" : "de rechazo"} enviado a ${r.name}.`,
+        `Reserva de ${firstName(r.name)} marcada como ${statusLabels[status].toLowerCase()}.`,
       );
       window.setTimeout(() => setToast(null), 3200);
     }
@@ -110,6 +122,49 @@ export function ReservationsPanel({
                 {r.note}
               </p>
             ) : null}
+
+            <div className="mt-4 border-t border-line/60 pt-3">
+              <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-faint">
+                Contacto
+              </p>
+              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.85rem]">
+                {r.phone ? (
+                  <>
+                    <span className="tabular-nums text-muted">{r.phone}</span>
+                    <a
+                      href={`https://wa.me/${toDigits(r.phone)}?text=${encodeURIComponent(confirmMessage(r))}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-[#8fca8c] transition-colors hover:text-[#a7d6a4]"
+                    >
+                      WhatsApp
+                    </a>
+                    <a
+                      href={`tel:${toDigits(r.phone)}`}
+                      className="font-medium text-ink transition-colors hover:text-gold-soft"
+                    >
+                      Llamar
+                    </a>
+                  </>
+                ) : null}
+                {r.email ? (
+                  <>
+                    <span className="text-muted">{r.email}</span>
+                    <a
+                      href={`mailto:${r.email}?subject=${encodeURIComponent(
+                        "Tu reserva en Pizzeria",
+                      )}&body=${encodeURIComponent(confirmMessage(r))}`}
+                      className="font-medium text-ink transition-colors hover:text-gold-soft"
+                    >
+                      Email
+                    </a>
+                  </>
+                ) : null}
+                {!r.phone && !r.email ? (
+                  <span className="text-faint">Sin datos de contacto</span>
+                ) : null}
+              </div>
+            </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
               {r.status !== "confirmada" ? (

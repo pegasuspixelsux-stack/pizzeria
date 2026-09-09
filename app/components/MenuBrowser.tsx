@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   MENU_DATA,
   categoryLabels,
@@ -15,7 +16,9 @@ import { ChevronDown } from "./icons";
 type Section = MenuItem["tags"][number];
 
 function groupsFor(tag: Section) {
-  const list = MENU_DATA.filter((m) => m.tags.includes(tag));
+  const list = MENU_DATA.filter(
+    (m) => m.published !== false && m.tags.includes(tag),
+  );
   return categoryOrder
     .map((cat) => ({ cat, items: list.filter((m) => m.category === cat) }))
     .filter((g) => g.items.length > 0);
@@ -78,34 +81,44 @@ export function MenuBrowser() {
                     </h3>
                     <ul className="mt-4 divide-y divide-line/60">
                       {g.items.map((item) => (
-                        <li
-                          key={item.id}
-                          className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
-                        >
-                          <div className="max-w-[52ch]">
-                            <p className="font-medium text-ink">
-                              {item.name}
-                              {item.unit ? (
-                                <span className="ml-2 text-[0.82rem] text-faint">
-                                  {item.unit}
+                        <li key={item.id} className="flex gap-4 py-4">
+                          {item.image ? (
+                            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[10px] bg-shell ring-1 ring-ink/[0.06] sm:h-20 sm:w-20">
+                              <Image
+                                src={item.image}
+                                alt=""
+                                fill
+                                sizes="80px"
+                                className="object-cover"
+                              />
+                            </div>
+                          ) : null}
+                          <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                            <div className="max-w-[52ch]">
+                              <p className="font-medium text-ink">
+                                {item.name}
+                                {item.unit ? (
+                                  <span className="ml-2 text-[0.82rem] text-faint">
+                                    {item.unit}
+                                  </span>
+                                ) : null}
+                              </p>
+                              {item.description ? (
+                                <p className="mt-1 text-[0.92rem] leading-relaxed text-muted">
+                                  {item.description}
+                                </p>
+                              ) : null}
+                            </div>
+                            <p className="shrink-0 tabular-nums text-ink-soft">
+                              {formatPrice(item.price)}
+                              {item.priceSecondary ? (
+                                <span className="text-muted">
+                                  {" / "}
+                                  {formatPrice(item.priceSecondary)}
                                 </span>
                               ) : null}
                             </p>
-                            {item.description ? (
-                              <p className="mt-1 text-[0.92rem] leading-relaxed text-muted">
-                                {item.description}
-                              </p>
-                            ) : null}
                           </div>
-                          <p className="shrink-0 tabular-nums text-ink-soft">
-                            {formatPrice(item.price)}
-                            {item.priceSecondary ? (
-                              <span className="text-muted">
-                                {" / "}
-                                {formatPrice(item.priceSecondary)}
-                              </span>
-                            ) : null}
-                          </p>
                         </li>
                       ))}
                     </ul>

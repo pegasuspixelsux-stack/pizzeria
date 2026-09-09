@@ -23,6 +23,7 @@ type Draft = {
   category: MenuItem["category"];
   tags: MenuItem["tags"];
   image?: string;
+  published: boolean;
 };
 
 const empty: Draft = {
@@ -34,6 +35,7 @@ const empty: Draft = {
   category: "pizzas",
   tags: ["dinner"],
   image: undefined,
+  published: true,
 };
 
 const field =
@@ -42,9 +44,14 @@ const label =
   "block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted";
 
 export function MenuManager() {
-  const [items, setItems] = useState<AdminItem[]>(() => MENU_DATA.map((m) => ({ ...m })));
+  const [items, setItems] = useState<AdminItem[]>(() =>
+    MENU_DATA.map((m) => ({ ...m, published: m.published !== false })),
+  );
   const [editing, setEditing] = useState<string | "new" | null>(null);
   const [draft, setDraft] = useState<Draft>(empty);
+
+  const shown = items.filter((i) => i.published !== false).length;
+  const hidden = items.length - shown;
 
   const grouped = useMemo(
     () =>
@@ -69,6 +76,7 @@ export function MenuManager() {
       category: item.category,
       tags: [...item.tags],
       image: item.image,
+      published: item.published !== false,
     });
     setEditing(item.id);
   };
@@ -91,6 +99,7 @@ export function MenuManager() {
       category: draft.category,
       tags: draft.tags.length ? draft.tags : ["dinner"],
       image: draft.image,
+      published: draft.published,
     };
     setItems((prev) =>
       editing === "new"
@@ -101,6 +110,11 @@ export function MenuManager() {
   };
 
   const remove = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+
+  const togglePublished = (id: string) =>
+    setItems((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, published: i.published === false } : i)),
+    );
 
   const toggleTag = (t: MenuItem["tags"][number]) =>
     setDraft((d) => ({
@@ -119,7 +133,10 @@ export function MenuManager() {
     <div>
       <div className="flex items-center justify-between gap-4">
         <p className="text-[0.9rem] text-muted">
-          {items.length} platos en la carta
+          {shown} en la carta
+          {hidden > 0 ? (
+            <span className="text-faint"> · {hidden} sin publicar</span>
+          ) : null}
         </p>
         {editing === null ? (
           <button
@@ -245,6 +262,30 @@ export function MenuManager() {
             </div>
 
             <div className="sm:col-span-2">
+              <label className={label}>Visibilidad</label>
+              <button
+                type="button"
+                onClick={() =>
+                  setDraft((d) => ({ ...d, published: !d.published }))
+                }
+                aria-pressed={draft.published}
+                className={[
+                  "mt-2 flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[0.8rem] transition-colors",
+                  draft.published
+                    ? "border-[#7FB37E]/50 bg-[#7FB37E]/10 text-[#8fca8c]"
+                    : "border-line text-muted hover:text-ink",
+                ].join(" ")}
+              >
+                <span
+                  className={`h-2 w-2 rounded-full ${draft.published ? "bg-[#8fca8c]" : "bg-faint"}`}
+                />
+                {draft.published
+                  ? "Visible en la carta"
+                  : "Sin publicar (no aparece en la carta)"}
+              </button>
+            </div>
+
+            <div className="sm:col-span-2">
               <label className={label}>Foto</label>
               <div className="mt-2 flex items-center gap-4">
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[10px] border border-line bg-shell">
@@ -300,7 +341,10 @@ export function MenuManager() {
               {g.list.map((item) => (
                 <li
                   key={item.id}
-                  className="flex items-start gap-4 py-3"
+                  className={[
+                    "flex items-start gap-4 py-3",
+                    item.published === false ? "opacity-55" : "",
+                  ].join(" ")}
                 >
                   <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[8px] border border-line bg-shell">
                     {item.image ? (
@@ -316,6 +360,11 @@ export function MenuManager() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-2">
                       <p className="font-medium text-ink">{item.name}</p>
+                      {item.published === false ? (
+                        <span className="rounded-full border border-line px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-faint">
+                          Sin publicar
+                        </span>
+                      ) : null}
                       {item.unit ? (
                         <span className="text-[0.78rem] text-faint">
                           {item.unit}
@@ -343,6 +392,13 @@ export function MenuManager() {
                       {formatPrice(item.price)}
                     </span>
                     <div className="flex gap-2 text-[0.78rem]">
+                      <button
+                        type="button"
+                        onClick={() => togglePublished(item.id)}
+                        className="text-muted hover:text-ink"
+                      >
+                        {item.published === false ? "Publicar" : "Despublicar"}
+                      </button>
                       <button
                         type="button"
                         onClick={() => startEdit(item)}
